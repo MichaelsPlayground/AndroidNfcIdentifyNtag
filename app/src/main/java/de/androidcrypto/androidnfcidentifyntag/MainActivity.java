@@ -158,13 +158,13 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
                     (byte) 0x03  // protocol type = ISO/IEC 14443-3 compliant
             };
             if (Arrays.equals(response, ntag213VersionData)) {
-                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG213 (144 bytes memory)";
+                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG213 (144 bytes memory = 36 pages)";
             }
             if (Arrays.equals(response, ntag215VersionData)) {
-                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG215 (504 bytes memory)";
+                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG215 (504 bytes memory = 126 pages)";
             }
             if (Arrays.equals(response, ntag216VersionData)) {
-                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG216 (888 bytes memory)";
+                nfcaContentString = nfcaContentString + "\n" + "Tag is of type NTAG216 (888 bytes memory = 222 pages)";
             }
             // Get Page 08h
             response = nfca.transceive(new byte[] {
