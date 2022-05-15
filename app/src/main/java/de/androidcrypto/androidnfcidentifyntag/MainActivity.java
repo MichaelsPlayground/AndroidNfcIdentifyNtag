@@ -97,6 +97,21 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
             nfcaContentString = nfcaContentString + "\n" + "atqaData: " + bytesToHex(atqaData);
 
             int responseLength;
+
+            String ntagType = NfcIdentifyNtag.checkNtagType(nfca);
+            nfcaContentString = nfcaContentString + "\n" + "NTAG TYPE: " + ntagType;
+            if (!ntagType.equals("0")) {
+                nfcaContentString = nfcaContentString + "\n" + "complete NTAG TYPE: " + NfcIdentifyNtag.getIdentifiedNtagType();
+                nfcaContentString = nfcaContentString + "\n" + "NTAG pages: " + NfcIdentifyNtag.getIdentifiedNtagPages();
+                nfcaContentString = nfcaContentString + "\n" + "NTAG memory bytes: " + NfcIdentifyNtag.getIdentifiedNtagMemoryBytes();
+            }
+
+
+
+
+
+
+
             // Get Page 00h
             // reads 16 bytes = 4 pages in one run
             response = nfca.transceive(new byte[] {
@@ -126,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
             nfcaContentString = nfcaContentString + "\n" + "get version";
             nfcaContentString = nfcaContentString + "\n" + "responseLength: " + responseLength;
             nfcaContentString = nfcaContentString + "\n" + " d: " + bytesToHex(response);
-            // data show here from NXP NTAG21x data sheet
+            // data show here are from NXP NTAG21x data sheet
             byte[] ntag213VersionData = new byte[] {
                     (byte) 0x00, // fixed header
                     (byte) 0x04, // vendor ID, 04h = NXP
