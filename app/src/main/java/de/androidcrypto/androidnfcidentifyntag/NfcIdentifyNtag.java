@@ -10,6 +10,7 @@ public class NfcIdentifyNtag {
     private static String identifiedNtagType = ""; // NTAG213, NTAG215 or NTAG216
     private static int identifiedNtagPages = 0; // NTAG 213 = 36, 215 = 126, 216 = 222 pages
     private static int identifiedNtagMemoryBytes = 0; // NTAG 213 = 144, 215 = 504, 216 = 888 bytes
+    private static byte[] identifiedNtagId = new byte[0];
 
     // data show here are from NXP NTAG21x data sheet
     private static byte[] ntag213VersionData = new byte[]{
@@ -44,9 +45,10 @@ public class NfcIdentifyNtag {
     };
 
     // returns 213/215/216 if tag is found or 0 when not detected
-    public static String checkNtagType(NfcA nfca) {
+    public static String checkNtagType(NfcA nfca, byte[] ntagId) {
         clearInternalData();
         String returnCode = "0";
+        identifiedNtagId = ntagId;
         byte[] response;
         // first we are checking that the tag is produced by NXP
         // Get Page 00h
@@ -98,14 +100,15 @@ public class NfcIdentifyNtag {
         return identifiedNtagPages;
     }
 
-    public static int getIdentifiedNtagMemoryBytes() {
-        return identifiedNtagMemoryBytes;
-    }
+    public static int getIdentifiedNtagMemoryBytes() { return identifiedNtagMemoryBytes; }
+
+    public static byte[] getIdentifiedNtagId() { return identifiedNtagId; }
 
     public static void clearInternalData() {
         identifiedNtagType = "";
         identifiedNtagPages = 0;
         identifiedNtagMemoryBytes = 0;
+        identifiedNtagId = new byte[0];
     }
 
 }

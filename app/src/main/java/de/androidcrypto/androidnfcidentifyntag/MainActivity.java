@@ -96,17 +96,19 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
             nfcaContentString = nfcaContentString + "\n" + "read ATQA";
             nfcaContentString = nfcaContentString + "\n" + "atqaData: " + bytesToHex(atqaData);
 
-            int responseLength;
-
-            String ntagType = NfcIdentifyNtag.checkNtagType(nfca);
+            String ntagType = NfcIdentifyNtag.checkNtagType(nfca, tag.getId()); // get the NTAG-id along with other data
             nfcaContentString = nfcaContentString + "\n" + "NTAG TYPE: " + ntagType;
             if (!ntagType.equals("0")) {
                 nfcaContentString = nfcaContentString + "\n" + "complete NTAG TYPE: " + NfcIdentifyNtag.getIdentifiedNtagType();
                 nfcaContentString = nfcaContentString + "\n" + "NTAG pages: " + NfcIdentifyNtag.getIdentifiedNtagPages();
                 nfcaContentString = nfcaContentString + "\n" + "NTAG memory bytes: " + NfcIdentifyNtag.getIdentifiedNtagMemoryBytes();
+                nfcaContentString = nfcaContentString + "\n" + "NTAG ID: " + bytesToHex(NfcIdentifyNtag.getIdentifiedNtagId());
             }
 
-
+            String[] techList = tag.getTechList();
+            for (int i = 0; i < techList.length; i++) {
+                nfcaContentString = nfcaContentString + "\n" + "techlist: " + techList[i];
+            }
 
             String finalNfcaContentString = nfcaContentString;
             runOnUiThread(new Runnable() {
